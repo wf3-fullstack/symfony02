@@ -68,7 +68,15 @@ AJOUTER LE FICHIER .htaccess
     updated: src/Entity/User.php
     updated: config/packages/security.yaml
 
+## CREATION DU CODE POUR LE LOGIN
 
+    php bin/console make:auth
 
+    1
 
+    LoginFormAuthenticator
+
+    SecurityController
+
+    
 
