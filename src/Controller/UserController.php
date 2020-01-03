@@ -37,7 +37,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // BRICOLAGE POUR RATTRAPER LE PROBLEME SUR roles
-            $user->setRoles("ROLE_USER");
+            $user->setRoles(["ROLE_USER"]);
 
             // HASHAGE DU MOT DE PASSE
             $passwordNonHashe = $user->getPassword();
@@ -48,6 +48,8 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            // IL FAUT ENVOYER UN EMAIL
 
             return $this->redirectToRoute('user_index');
         }
