@@ -40,5 +40,23 @@ AJOUTER LE FICHIER .htaccess
 
 
 
+    ET CHANGER URL POUR ACCUEIL
+
+
+## DATABASE POUR SQL
+
+    MODIFIER LE FICHIER .env
+
+    # DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7
+    DATABASE_URL=mysql://root:@127.0.0.1:3306/symfony02?serverVersion=5.7
+
+    ON VA CREER LA DATABASE EN LIGNE DE COMMANDE
+
+    php bin/console doctrine:database:create
+
+    Created database `symfony02` for connection named default
+
+
+
 
 
