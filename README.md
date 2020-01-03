@@ -108,3 +108,32 @@ AJOUTER LE FICHIER .htaccess
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
 
 
+## LANCER LA make:crud POUR CREER LES PAGES POUR AJOUTER DES User
+
+
+    php bin/console make:crud User
+
+
+    created: src/Controller/UserController.php
+    created: src/Form/UserType.php
+    created: templates/user/_delete_form.html.twig
+    created: templates/user/_form.html.twig
+    created: templates/user/edit.html.twig
+    created: templates/user/index.html.twig
+    created: templates/user/new.html.twig
+    created: templates/user/show.html.twig
+
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('email')
+            //->add('roles')
+            ->add('password')
+        ;
+    }
+
+    BRICOLAGE DE LA CLASSE User.php
+    ...
+
+    
