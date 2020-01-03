@@ -15,5 +15,9 @@ AVEC LA CONSOLE
 
     git status
 
+    git commit -a -m "message du commit"
+
+    git push
+
     
 
