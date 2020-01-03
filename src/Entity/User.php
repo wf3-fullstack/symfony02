@@ -63,12 +63,12 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         // BRICOLAGE POUR OBTENIR UN TABLEAU
-        $roles = $this->roles;
+        $roles = [ $this->roles ];
         // guarantee every user at least has ROLE_USER
-        // $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_USER';
 
         return $roles;
     }
