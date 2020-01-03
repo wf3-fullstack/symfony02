@@ -78,5 +78,33 @@ AJOUTER LE FICHIER .htaccess
 
     SecurityController
 
-    
+
+
+## CREER LES TABLES SQL    
+
+
+    php bin/console make:migration
+
+    => CREER LE FICHIER PHP Version...
+
+    php bin/console doctrine:migrations:migrate
+
+
+    SI ON A MARIA DB QUI NE GERE PAS LE TYPE JSON
+
+    https://mariadb.com/kb/en/json-data-type/
+
+        SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C7' at line 1
+
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $roles = [];
+
+
+    make:migration  => LONGTEXT
+
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+
 
