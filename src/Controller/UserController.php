@@ -39,6 +39,12 @@ class UserController extends AbstractController
             // BRICOLAGE POUR RATTRAPER LE PROBLEME SUR roles
             $user->setRoles("ROLE_USER");
 
+            // HASHAGE DU MOT DE PASSE
+            $passwordNonHashe = $user->getPassword();
+            $passwordHashe    = password_hash($passwordNonHashe, PASSWORD_BCRYPT);
+            $user->setPassword($passwordHashe);
+
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
