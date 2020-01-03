@@ -19,5 +19,20 @@ AVEC LA CONSOLE
 
     git push
 
+
+## CONTROLLER POUR L'ESPACE PUBLIC
+
+    On va créer 2 controllers
     
+    PublicController.php
+
+    AdminController.php
+
+    php bin/console make:controller PublicController
+
+    php bin/console make:controller AdminController
+
+
+
+
 
