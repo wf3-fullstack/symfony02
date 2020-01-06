@@ -65,6 +65,11 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
+        // ON EST TOUJOURS SUR UNE REQUETE HTTP GET
+        // MAIS ON NE RECOIT PAS id PAR UN PARAMETRE GET
+        // ?id=8
+        // ?id=9
+        
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);

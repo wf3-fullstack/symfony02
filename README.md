@@ -139,3 +139,23 @@ AJOUTER LE FICHIER .htaccess
 ## AJOUT DE CODE TWIG POUR AFFICHER LA LISTE DES ROLES
 
 
+## ROUTES AVEC PARAMETRES
+
+
+https://symfony.com/doc/current/routing.html#route-parameters
+
+
+ON PEUT AJOUTER DES CONTRAINTES SUR LES PARAMETRES
+
+
+    /**
+     * @Route("/test/{id}", name="testRoute", requirements={"id"="\d+"})
+     */
+
+
+
+## READ AVEC DOCTRINE
+
+
+https://symfony.com/doc/current/doctrine.html#fetching-objects-from-the-database
+
