@@ -263,4 +263,30 @@ Annonce => ENTITE
  created: templates/annonce/index.html.twig
  created: templates/annonce/new.html.twig
  created: templates/annonce/show.html.twig
- 
+
+
+
+ ## PERSONNALISER LES CHAMPS DE FORMULAIRE
+
+
+ https://symfony.com/doc/current/forms.html#rendering-forms
+
+ https://symfony.com/doc/current/reference/forms/types.html
+
+ https://symfony.com/doc/current/reference/forms/types/entity.html
+
+
+ ## MANY TO MANY
+
+    CREER UNE AUTRE ENTITE POUR CREER UNE RELATION MANY OTO MANY
+    
+ ## ESPACE MEMBRE
+
+
+    UNE ANNONCE CREEE EST AUTOMATIQUEMENT ATTRIBUEE AU User CONNECTE
+
+ ## PAGE PUBLIQUE annonces
+
+    PAGE QUI AFFICHE LA LISTE DES ANNONCES AVEC LE username DU User
+    => JOINTURE SUR UN READ
+

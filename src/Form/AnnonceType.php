@@ -7,6 +7,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+// ON VA GERER LA RELATION AVEC User
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+
 class AnnonceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -19,7 +24,10 @@ class AnnonceType extends AbstractType
             ->add('photo')
             ->add('datePublication')
             ->add('categorie')
-            ->add('user')
+            ->add('user', EntityType::class, [
+                            'class' => User::class, // ON VA FAIRE UNE RELATION AVEC User
+                            'choice_label' => 'username',   // QUELLE PROPRIETE SERA AFFICHEE DANS LE FORMULAIRE
+        ])
         ;
     }
 
