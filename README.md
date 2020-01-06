@@ -173,7 +173,7 @@ POUR COMPRENDRE LES VALEURS DES VARIABLES
 ## A VOIR AVEC SYMFONY
 
 MAIL
-FORMULAIRE ET VALIDATION
+FORMULAIRE ET VALIDATION        OK (CONTRAINTES)
 FORMULAIRE ET UPLOAD
 FORMULAIRE ET HTML ET CSS
 FORMULAIRE ET AJAX (ET JSON)
@@ -202,3 +202,65 @@ https://symfony.com/doc/current/reference/constraints/Email.html
 UNICITE
 
 https://symfony.com/doc/current/reference/constraints/UniqueEntity.html
+
+ATTENTION: IL FAUT UNE CONTRAINTE D'UNICITE PAR COLONNE...
+
+    /**
+    * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+    * @UniqueEntity(
+    *      fields="username", 
+    *      message="bad username"
+    * )
+    * @UniqueEntity(
+    *      fields="email", 
+    *      message="DESOLE CHANGE D'EMAIL STP..."
+    * )
+    */
+    class User implements UserInterface
+
+
+
+## JOINTURE
+
+IL FAUT AU MOINS 2 TABLES
+
+Annonce => ENTITE
+    PROPRIETES                              COLONNE SQL
+    (id)
+    titre           string(160)
+    description     text
+    slug            string(160)     => identifiant dans URL (SEO avec des mots clés...)
+    prix            decimal(10,2)
+    photo           string(160)
+    datePublication datetime
+    categorie       string(160)
+    user            relation(MANY-TO-ONE)   id_user
+
+
+    php bin/console make:entity Annonce
+
+    => POUR CREER LA TABLE SQL annonce
+
+
+    created: src/Entity/Annonce.php
+    created: src/Repository/AnnonceRepository.php
+
+
+    php bin/console make:migration
+
+
+
+    php bin/console doctrine:migrations:migrate
+
+    php bin/console make:crud Annonce
+
+
+ created: src/Controller/AnnonceController.php
+ created: src/Form/AnnonceType.php
+ created: templates/annonce/_delete_form.html.twig
+ created: templates/annonce/_form.html.twig
+ created: templates/annonce/edit.html.twig
+ created: templates/annonce/index.html.twig
+ created: templates/annonce/new.html.twig
+ created: templates/annonce/show.html.twig
+ 
