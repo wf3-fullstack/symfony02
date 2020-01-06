@@ -172,13 +172,29 @@ POUR COMPRENDRE LES VALEURS DES VARIABLES
 
 ## A VOIR AVEC SYMFONY
 
-MAIL
-FORMULAIRE ET VALIDATION        OK (CONTRAINTES)
-FORMULAIRE ET UPLOAD
-FORMULAIRE ET HTML ET CSS
-FORMULAIRE ET AJAX (ET JSON)
-READ AVEC JOINTURE
-FORMULAIRE ET CREATE/UPDATE/DELETE AVEC JOINTURE
+    MAIL
+    https://symfony.com/doc/current/mailer.html
+
+    FORMULAIRE ET VALIDATION        OK (CONTRAINTES)
+    https://symfony.com/doc/current/validation.html
+
+    FORMULAIRE ET UPLOAD
+    https://symfony.com/doc/current/controller/upload_file.html
+
+    FORMULAIRE ET HTML ET CSS
+    https://symfony.com/doc/current/forms.html
+
+    FORMULAIRE ET AJAX (ET JSON)
+    https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
+
+    READ AVEC JOINTURE
+    https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/dql-doctrine-query-language.html
+
+    https://www.wanadev.fr/56-comment-realiser-de-belles-requetes-sql-avec-doctrine/
+
+    FORMULAIRE ET CREATE/UPDATE/DELETE AVEC JOINTURE
+    https://symfony.com/doc/current/forms.html#rendering-forms
+
 
 EXEMPLE PRATIQUE: 
 PANIER
@@ -278,8 +294,22 @@ Annonce => ENTITE
 
  ## MANY TO MANY
 
-    CREER UNE AUTRE ENTITE POUR CREER UNE RELATION MANY OTO MANY
+    CREER UNE AUTRE ENTITE POUR CREER UNE RELATION MANY TO MANY
+
+    LIKE ENTRE User ET Annonce
+
+    php bin/console make:entity Annonce
+
+
+    php bin/console make:migration
+
     
+    php bin/console doctrine:migrations:migrate
+
+    => SYMFONY CREE LA TABLE INTERMEDIAIRE annonce_user
+
+
+
  ## ESPACE MEMBRE
 
 
@@ -289,4 +319,6 @@ Annonce => ENTITE
 
     PAGE QUI AFFICHE LA LISTE DES ANNONCES AVEC LE username DU User
     => JOINTURE SUR UN READ
+
+
 

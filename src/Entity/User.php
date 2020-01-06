@@ -63,9 +63,15 @@ class User implements UserInterface
      */
     private $annonces;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Annonce", mappedBy="users")
+     */
+    private $likeannonces;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
+        $this->likeannonces = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,6 +185,34 @@ class User implements UserInterface
             if ($annonce->getUser() === $this) {
                 $annonce->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Annonce[]
+     */
+    public function getLikeannonces(): Collection
+    {
+        return $this->likeannonces;
+    }
+
+    public function addLikeannonce(Annonce $likeannonce): self
+    {
+        if (!$this->likeannonces->contains($likeannonce)) {
+            $this->likeannonces[] = $likeannonce;
+            $likeannonce->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeannonce(Annonce $likeannonce): self
+    {
+        if ($this->likeannonces->contains($likeannonce)) {
+            $this->likeannonces->removeElement($likeannonce);
+            $likeannonce->removeUser($this);
         }
 
         return $this;

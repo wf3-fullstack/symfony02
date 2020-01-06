@@ -5,6 +5,12 @@
 {% block body %}
     <h1>Annonce</h1>
 
+    <form>
+        <input type="text" name="id" value="{{ annonce.id }}">
+        <input type="text" name="identifiantFormulaire" value="like">
+        <button type="submit">LIKE</button>
+    </form>
+
     <table class="table">
         <tbody>
             <tr>

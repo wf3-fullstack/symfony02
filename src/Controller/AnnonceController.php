@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Repository\UserRepository;
+
+
 /**
  * @Route("/admin/annonce")
  */
@@ -51,8 +54,36 @@ class AnnonceController extends AbstractController
     /**
      * @Route("/{id}", name="annonce_show", methods={"GET"})
      */
-    public function show(Annonce $annonce): Response
+    public function show(Annonce $annonce, Request $request): Response
     {
+        // IL FAUDRAIT QUE JE RAJOUTE LE CODE POUR TRAITER LE FORMULAIRE
+        // A LA MAIN
+        // dump($annonce);
+        // dump($_REQUEST);
+        // dump($request);
+
+        // AVEC SYMFONY, POUR RECUPERER LES INFOS DE FORMULAIRE
+        // ON PASSE PAR L'OBJET $request ET LA METHODE get
+        $identifiantFormulaire = $request->get("identifiantFormulaire");
+        dump($identifiantFormulaire);
+        if ($identifiantFormulaire == "like")
+        {
+            // ON AJOUTE UN LIKE SUR L'ANNONCE AVEC LE User CONNECTE
+            // ON RECUPERE L'id DU FORMULAIRE
+            $id =  $request->get("id");
+            // ON A BESOIN DE L'ENTITE User
+            $userConnecte = $this->getUser();
+            dump($userConnecte);
+            // ON AJOUTE LE LIKE EN PARTANT DE L'UTILISATEUR
+            // $annonce->addUser($userConnecte);
+            // ON MANIPULE DES ENTITES (objet) ET DES RELATIONS
+            $userConnecte->addLikeannonce($annonce);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($userConnecte);
+            $entityManager->flush();
+        }
+
         return $this->render('annonce/show.html.twig', [
             'annonce' => $annonce,
         ]);
