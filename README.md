@@ -3,11 +3,12 @@
 
 ## INSTALLATION DE SYMFONY
 
-https://symfony.com/doc/current/setup.html#creating-symfony-applications
+    https://symfony.com/doc/current/setup.html#creating-symfony-applications
+
 
 ## GIT EXEMPLE
 
-AVEC LA CONSOLE
+    AVEC LA CONSOLE
 
     git status
 
@@ -22,7 +23,7 @@ AVEC LA CONSOLE
 
 ## CONTROLLER POUR L'ESPACE PUBLIC
 
-AJOUTER LE FICHIER .htaccess
+    AJOUTER LE FICHIER .htaccess
 
     composer require symfony/apache-pack
 
@@ -142,10 +143,10 @@ AJOUTER LE FICHIER .htaccess
 ## ROUTES AVEC PARAMETRES
 
 
-https://symfony.com/doc/current/routing.html#route-parameters
+    https://symfony.com/doc/current/routing.html#route-parameters
 
 
-ON PEUT AJOUTER DES CONTRAINTES SUR LES PARAMETRES
+    ON PEUT AJOUTER DES CONTRAINTES SUR LES PARAMETRES
 
 
     /**
@@ -157,17 +158,17 @@ ON PEUT AJOUTER DES CONTRAINTES SUR LES PARAMETRES
 ## READ AVEC DOCTRINE
 
 
-https://symfony.com/doc/current/doctrine.html#fetching-objects-from-the-database
+    https://symfony.com/doc/current/doctrine.html#fetching-objects-from-the-database
 
     DOCUMENTATION REFERENCE POUR findBy
 
-https://www.doctrine-project.org/api/orm/latest/Doctrine/ORM/EntityRepository.html#method_findBy
+    https://www.doctrine-project.org/api/orm/latest/Doctrine/ORM/EntityRepository.html#method_findBy
 
 
 ## DEBUGGAGE AVEC SYMFONY ET LA FONCTION dump
 
-NE PAS HESITER A DEBUGGER AVEC LA FONCTION dump
-POUR COMPRENDRE LES VALEURS DES VARIABLES
+    NE PAS HESITER A DEBUGGER AVEC LA FONCTION dump
+    POUR COMPRENDRE LES VALEURS DES VARIABLES
 
 
 ## A VOIR AVEC SYMFONY
@@ -196,30 +197,30 @@ POUR COMPRENDRE LES VALEURS DES VARIABLES
     https://symfony.com/doc/current/forms.html#rendering-forms
 
 
-EXEMPLE PRATIQUE: 
-PANIER
-PAIEMENT: CONSEIL PASSER PAR API PAYPAL
-            => DOCUMENTATION A LIRE (TUTORIEL A SUIVRE...)
+    EXEMPLE PRATIQUE: 
+    PANIER
+    PAIEMENT: CONSEIL PASSER PAR API PAYPAL
+                => DOCUMENTATION A LIRE (TUTORIEL A SUIVRE...)
 
-PRODUIRE DES PDF: CONSEIL PASSER PAR BIBLIOTHEQUES PHP
-    ...NOM A TROUVER...
+    PRODUIRE DES PDF: CONSEIL PASSER PAR BIBLIOTHEQUES PHP
+        ...NOM A TROUVER...
 
 
 ## VALIDATION DE FORMULAIRE
 
 
-https://symfony.com/doc/current/validation.html
+    https://symfony.com/doc/current/validation.html
 
 
-EXEMPLE EMAIL:
+    EXEMPLE EMAIL:
 
-https://symfony.com/doc/current/reference/constraints/Email.html
+    https://symfony.com/doc/current/reference/constraints/Email.html
 
-UNICITE
+    UNICITE
 
-https://symfony.com/doc/current/reference/constraints/UniqueEntity.html
+    https://symfony.com/doc/current/reference/constraints/UniqueEntity.html
 
-ATTENTION: IL FAUT UNE CONTRAINTE D'UNICITE PAR COLONNE...
+    ATTENTION: IL FAUT UNE CONTRAINTE D'UNICITE PAR COLONNE...
 
     /**
     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -238,19 +239,19 @@ ATTENTION: IL FAUT UNE CONTRAINTE D'UNICITE PAR COLONNE...
 
 ## JOINTURE
 
-IL FAUT AU MOINS 2 TABLES
+    IL FAUT AU MOINS 2 TABLES
 
-Annonce => ENTITE
-    PROPRIETES                              COLONNE SQL
-    (id)
-    titre           string(160)
-    description     text
-    slug            string(160)     => identifiant dans URL (SEO avec des mots clés...)
-    prix            decimal(10,2)
-    photo           string(160)
-    datePublication datetime
-    categorie       string(160)
-    user            relation(MANY-TO-ONE)   id_user
+    Annonce => ENTITE
+        PROPRIETES                              COLONNE SQL
+        (id)
+        titre           string(160)
+        description     text
+        slug            string(160)     => identifiant dans URL (SEO avec des mots clés...)
+        prix            decimal(10,2)
+        photo           string(160)
+        datePublication datetime
+        categorie       string(160)
+        user            relation(MANY-TO-ONE)   id_user
 
 
     php bin/console make:entity Annonce
@@ -271,25 +272,25 @@ Annonce => ENTITE
     php bin/console make:crud Annonce
 
 
- created: src/Controller/AnnonceController.php
- created: src/Form/AnnonceType.php
- created: templates/annonce/_delete_form.html.twig
- created: templates/annonce/_form.html.twig
- created: templates/annonce/edit.html.twig
- created: templates/annonce/index.html.twig
- created: templates/annonce/new.html.twig
- created: templates/annonce/show.html.twig
+    created: src/Controller/AnnonceController.php
+    created: src/Form/AnnonceType.php
+    created: templates/annonce/_delete_form.html.twig
+    created: templates/annonce/_form.html.twig
+    created: templates/annonce/edit.html.twig
+    created: templates/annonce/index.html.twig
+    created: templates/annonce/new.html.twig
+    created: templates/annonce/show.html.twig
 
 
 
  ## PERSONNALISER LES CHAMPS DE FORMULAIRE
 
 
- https://symfony.com/doc/current/forms.html#rendering-forms
+    https://symfony.com/doc/current/forms.html#rendering-forms
 
- https://symfony.com/doc/current/reference/forms/types.html
+    https://symfony.com/doc/current/reference/forms/types.html
 
- https://symfony.com/doc/current/reference/forms/types/entity.html
+    https://symfony.com/doc/current/reference/forms/types/entity.html
 
 
  ## MANY TO MANY
