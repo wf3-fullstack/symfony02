@@ -159,3 +159,46 @@ ON PEUT AJOUTER DES CONTRAINTES SUR LES PARAMETRES
 
 https://symfony.com/doc/current/doctrine.html#fetching-objects-from-the-database
 
+    DOCUMENTATION REFERENCE POUR findBy
+
+https://www.doctrine-project.org/api/orm/latest/Doctrine/ORM/EntityRepository.html#method_findBy
+
+
+## DEBUGGAGE AVEC SYMFONY ET LA FONCTION dump
+
+NE PAS HESITER A DEBUGGER AVEC LA FONCTION dump
+POUR COMPRENDRE LES VALEURS DES VARIABLES
+
+
+## A VOIR AVEC SYMFONY
+
+MAIL
+FORMULAIRE ET VALIDATION
+FORMULAIRE ET UPLOAD
+FORMULAIRE ET HTML ET CSS
+FORMULAIRE ET AJAX (ET JSON)
+READ AVEC JOINTURE
+FORMULAIRE ET CREATE/UPDATE/DELETE AVEC JOINTURE
+
+EXEMPLE PRATIQUE: 
+PANIER
+PAIEMENT: CONSEIL PASSER PAR API PAYPAL
+            => DOCUMENTATION A LIRE (TUTORIEL A SUIVRE...)
+
+PRODUIRE DES PDF: CONSEIL PASSER PAR BIBLIOTHEQUES PHP
+    ...NOM A TROUVER...
+
+
+## VALIDATION DE FORMULAIRE
+
+
+https://symfony.com/doc/current/validation.html
+
+
+EXEMPLE EMAIL:
+
+https://symfony.com/doc/current/reference/constraints/Email.html
+
+UNICITE
+
+https://symfony.com/doc/current/reference/constraints/UniqueEntity.html

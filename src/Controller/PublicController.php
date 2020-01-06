@@ -41,18 +41,29 @@ class PublicController extends AbstractController
 
 
     /**
-     * @Route("/testlist", name="testlist")
+     * @Route("/testlist/{page}", name="testlist")
      */
-    public function testlist(UserRepository $userRepository)
+    public function testlist(UserRepository $userRepository, $page=1)
     {
+        // ON PEUT DEMANDER LA PAGE EN PARAMETRE D'URL 
+        // ET DONNER UNE VALEUR PAR DEFAUT
+        dump("LA PAGE DEMANDEE EST $page");
 
+
+        https://www.doctrine-project.org/api/orm/latest/Doctrine/ORM/EntityRepository.html#method_count
+        $nbUser = $userRepository->count([]);   // ATTENTION, ON DOIT FOURNIR UN TABLEAU EN PARAMETRE
+
+        // https://www.doctrine-project.org/api/orm/latest/Doctrine/ORM/EntityRepository.html#method_findBy
         // ON A BESOIN DE UserRepository POUR FAIRE LA REQUETE READ 
         // POUR RECUPETERER TOUS LES User
+
+        
         $listeUser =  $userRepository->findBy([], ["id" => "DESC"]);
         dump($listeUser);
 
         return $this->render('public/testlist.html.twig', [
             'listeUser'     => $listeUser,
+            'nbUser'        => $nbUser,
         ]);        
     }
 

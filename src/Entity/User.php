@@ -5,8 +5,19 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+// A RAJOUTER POUR POUVOIR UTILISER LES CONTRAINTES SUR MON ENTITE
+// https://symfony.com/doc/current/reference/constraints/Email.html
+use Symfony\Component\Validator\Constraints as Assert;
+
+// DON'T forget the following use statement!!!
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *      fields={"email", "username"}, 
+ *      message={"DESOLE CHANGE D'EMAIL STP...", "bad username"}
+ * )
  */
 class User implements UserInterface
 {
@@ -19,6 +30,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "ARRETE DE HACKER MON EMAIL '{{ value }}'"
+     * )
      */
     private $email;
 
