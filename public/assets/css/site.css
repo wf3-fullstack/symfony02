@@ -8,6 +8,12 @@ h1 {
     color:orange;
 }
 
+nav a {
+    display:inline-block;
+    text-decoration: none;
+    border:1px solid #aaaaaa;
+    padding:0.5rem;
+}
 form label {
     display:block;
 }
@@ -31,3 +37,17 @@ table td {
     border:1px solid #aaaaaa;
     padding:0.25rem;
 }
+
+.listeAnnonce, .listeAnnonceAjax {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width:100%;
+}
+
+.listeAnnonce article, .listeAnnonceAjax article {
+    width: calc(100% / 3 - 0.5rem);
+    min-width:360px;
+    border:1px solid #aaaaaa;
+    padding:0.25rem;
+    margin:0.25rem;
