@@ -179,7 +179,7 @@
     OK =>   FORMULAIRE ET VALIDATION        (CONTRAINTES)
     https://symfony.com/doc/current/validation.html
 
-    FORMULAIRE ET UPLOAD
+    OK => FORMULAIRE ET UPLOAD
     https://symfony.com/doc/current/controller/upload_file.html
 
     FORMULAIRE ET HTML ET CSS
@@ -443,6 +443,17 @@ class MonCode
 
     PROBLEME: PAS A JOUR PAR RAPPORT AUX ARCHITECTURES LOGICIELLES ACTUELLES 
     (AJAX, ANGULAR, REACT, VUEJS, etc...)
+
+
+## UPLOAD DE FICHIER
+
+
+    ATTENTION A LA SECURITE: 
+    BIEN AJOUTER DES CONTRAINTES SUR LES EXTENSIONS DE FICHIERS...
+    (...constraints...)
+
+    https://symfony.com/doc/current/controller/upload_file.html
+
 
 
 
