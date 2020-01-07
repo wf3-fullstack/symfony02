@@ -376,3 +376,21 @@ https://symfony.com/doc/current/mailer.html
                 ->html('<p>NOUVELLE INSCRIPTION</p>');
                 // ON PEUT UTILISER DES TEMPLATES TWIG POUR CREER LE HTML DES EMAILS
                 // https://symfony.com/doc/current/mailer.html#twig-html-css
+
+
+## CREER DE NOUVEAUX FORMULAIRES
+
+
+    https://symfony.com/doc/current/forms.html#creating-form-classes
+
+    ON VA UTILISER LA CONSOLE POUR GENERER LA BASE DE CODE POUR UN NOUVEAU FORMULAIRE
+
+    php bin/console make:form
+
+
+
+    
+    
+
+
+

@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
+// FORMULAIRE D'ACTIVATION
+use App\Form\ActivationUserType;
+
 
 class PublicController extends AbstractController
 {
@@ -89,6 +92,74 @@ class PublicController extends AbstractController
         ]);
     }
 
+
+
+    /**
+     * @Route("/activation", name="activation")
+     */
+    public function activation(Request $request, MailerInterface $mailer, UserRepository $userRepository)
+    {
+
+        // ON VA CREER UN FORMULAIRE A PARTIR DE LA CLASSE ActivationUserType
+        $form = $this->createForm(ActivationUserType::class);
+        // ON TRANSMET LES INFOS DE LA REQUETE AU FORMULAIRE $form
+        $form->handleRequest($request);
+
+        // TRAITEMENT DU FORMULAIRE
+        if ($form->isSubmitted())
+        {
+            // DEBUG
+            dump("FORMULAIRE SOUMIS A TRAITER");
+            if ($form->isValid()) 
+            {
+                // DEBUG
+                dump("FORMULAIRE VALIDE A TRAITER");
+                // RECUPERER LES INFOS DU FORMULAIRE
+                // $email          = $request->get("activation_user[email]");
+                // $cleActivation  = $request->get("activation_user[cleActivation]");
+
+                // ON PASSE PAR $form
+                $email = $form->get("email")->getData();
+                $cleActivation = $form->get("cleActivation")->getData();
+
+                // REQUETE READ SUR ENTITE User
+                $userTrouve = $userRepository->findOneBy([ "email" => $email, "cleActivation" => $cleActivation]);
+                if ($userTrouve != null)
+                {
+                    // OK ON A TROUVE
+                    dump($userTrouve);
+
+                    // IL FAUT ACTIVER LE User
+                    // ET IL FAUT EFFACER LA cleActivation
+                    $userTrouve->setRoles(["ROLE_TOTO", "ROLE_MEMBRE"]);
+                    $userTrouve->setCleActivation(uniqid());
+
+                    // SYNCHRONISER AVEC LA TABLE SQL
+                    $entityManager = $this->getDoctrine()->getManager();
+                    // ON N'A PAS BESOIN DE FAIRE persist
+                    // => ON A RECUPERE $userTrouve AVEC $userRepository
+                    // ET DONC SYMFONY SE SOUVIENT DU LIEN ENTRE L'ENTITE ET LA LIGNE SQL
+                    $entityManager->flush();
+                }
+                else
+                {
+                   // ERREUR
+                   dump("USER NON TROUVE");     
+                }
+
+                // DEBUG
+                dump("INFOS RECUPEREES $email/$cleActivation");
+            }
+        }
+
+        // AFFICHAGE DE LA PAGE
+        return $this->render('public/activation.html.twig', [
+            // CLES => VARIABLES TWIG
+            "form"      => $form->createView(),
+            "message"   => $message ?? "",
+        ]);
+
+    }
 
     /**
      * @Route("/test/{id}", name="testRoute", requirements={"id"="\d+"})
