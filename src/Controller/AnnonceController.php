@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 /**
  * @Route("/admin/annonce")
  */
@@ -32,7 +31,7 @@ class AnnonceController extends AbstractController
     /**
      * @Route("/new", name="annonce_new", methods={"GET","POST"})
      */
-    public function new(Request $request, KernelInterface $appKernel): Response
+    public function new(Request $request): Response
     {
         $annonce = new Annonce();
         $form = $this->createForm(AnnonceType::class, $annonce);
@@ -56,7 +55,10 @@ class AnnonceController extends AbstractController
                 $annonce->setPhoto($fileName);
 
                 // ON VA STOCKER LE FICHIER
-                $cheminDossier = $appKernel->getProjectDir() . "/public/assets/upload";
+                $projectDir = $this->getParameter("kernel.project_dir");
+                $cheminDossier = "$projectDir/public/assets/upload";
+                dump($projectDir);
+
                 $photo->move($cheminDossier, $fileName);
             }
 
