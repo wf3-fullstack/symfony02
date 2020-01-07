@@ -68,6 +68,11 @@ class User implements UserInterface
      */
     private $likeannonces;
 
+    /**
+     * @ORM\Column(type="string", length=160)
+     */
+    private $cleActivation;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
@@ -214,6 +219,18 @@ class User implements UserInterface
             $this->likeannonces->removeElement($likeannonce);
             $likeannonce->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getCleActivation(): ?string
+    {
+        return $this->cleActivation;
+    }
+
+    public function setCleActivation(string $cleActivation): self
+    {
+        $this->cleActivation = $cleActivation;
 
         return $this;
     }

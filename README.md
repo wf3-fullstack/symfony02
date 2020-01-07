@@ -323,3 +323,56 @@
 
 
 
+## MAILS AVEC SYMFONY
+
+
+COMPOSANT HISTORIQUE
+
+https://symfony.com/doc/current/email.html
+
+
+NOUVEAU COMPOSANT (EN COURS DE DEV...)
+
+https://symfony.com/doc/current/mailer.html
+
+
+    composer require symfony/mailer
+    => Nothing to install or update
+    => DEJA INSTALLE DANS NOTRE PROJET
+
+
+    CONFIGURER LE SERVICE DANS .env
+
+    # EN MODE DEV, POUR SIMULER LES EMAILS
+    # REGARDER DANS LE PROFILER
+    MAILER_DSN=null://null
+
+    # SUR LE VRAI HEBERGEMENT
+    MAILER_DSN=smtp://localhost
+
+
+
+    ###> symfony/mailer ###
+    # POUR LE VRAI SITE (SUR L'HEBERGEMENT...)
+    # MAILER_DSN=smtp://localhost
+    # https://symfony.com/doc/current/mailer.html#disabling-delivery
+    # DESACTIVE L'ENVOI DE MAIL (POUR LE DEV)
+    MAILER_DSN=null://null
+    ###< symfony/mailer ###
+
+
+    ENVOI DE MAIL DANS LE PHP (CONTROLLER)
+
+            // IL FAUT ENVOYER UN EMAIL A L'ADMIN
+            $email = (new Email())
+                ->from('contact@monsite.fr')
+                ->to('admin@monsite.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('NOUVELLE INSCRIPTION')
+                ->text('NOUVELLE INSCRIPTION')
+                ->html('<p>NOUVELLE INSCRIPTION</p>');
+                // ON PEUT UTILISER DES TEMPLATES TWIG POUR CREER LE HTML DES EMAILS
+                // https://symfony.com/doc/current/mailer.html#twig-html-css

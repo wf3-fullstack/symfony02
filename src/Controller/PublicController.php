@@ -10,6 +10,10 @@ use App\Repository\UserRepository;
 use App\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
 
+// POUR ENVOYER UN EMAIL
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 class PublicController extends AbstractController
 {
@@ -26,7 +30,7 @@ class PublicController extends AbstractController
     /**
      * @Route("/inscription", name="inscription")
      */
-    public function inscription(Request $request)
+    public function inscription(Request $request, MailerInterface $mailer)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -43,6 +47,9 @@ class PublicController extends AbstractController
             $passwordHashe    = password_hash($passwordNonHashe, PASSWORD_BCRYPT);
             $user->setPassword($passwordHashe);
 
+            // JE CREE UNE CLE D'ACTIVATION ALEATOIRE
+            $cleActivation = md5(password_hash(uniqid(), PASSWORD_DEFAULT));
+            $user->setCleActivation($cleActivation);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -51,7 +58,25 @@ class PublicController extends AbstractController
             // OK ON A CREE UN NOUVEL User
             $message = "COOL BIENVENUE TON COMPTE EST CREE";
 
-            // IL FAUT ENVOYER UN EMAIL
+
+            // IL FAUT ENVOYER UN EMAIL A L'ADMIN
+            $email = (new Email())
+                ->from('contact@monsite.fr')
+                ->to('admin@monsite.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject("NOUVELLE INSCRIPTION")
+                ->text("NOUVELLE INSCRIPTION CLE ACTIVATION: $cleActivation")
+                ->html("<p>NOUVELLE INSCRIPTION CLE ACTIVATION: $cleActivation</p>");
+                // ON PEUT UTILISER DES TEMPLATES TWIG POUR CREER LE HTML DES EMAILS
+                // https://symfony.com/doc/current/mailer.html#twig-html-css
+
+
+            /** @var Symfony\Component\Mailer\SentMessage $sentEmail */
+            $sentEmail = $mailer->send($email);
+            // $messageId = $sentEmail->getMessageId();
 
             // return $this->redirectToRoute('user_index');
         }
