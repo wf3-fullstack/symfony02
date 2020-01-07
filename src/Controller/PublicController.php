@@ -27,6 +27,7 @@ class PublicController extends AbstractController
     {
         return $this->render('public/index.html.twig', [
             // CLES => VARIABLES TWIG
+            "classBody" => "index",
         ]);
     }
 
@@ -89,6 +90,8 @@ class PublicController extends AbstractController
             // CLES => VARIABLES TWIG
             'message'           => $message,
             'form'              => $form->createView(),
+            "classBody"         => "inscription",
+
         ]);
     }
 
@@ -115,12 +118,12 @@ class PublicController extends AbstractController
                 // DEBUG
                 dump("FORMULAIRE VALIDE A TRAITER");
                 // RECUPERER LES INFOS DU FORMULAIRE
-                // $email          = $request->get("activation_user[email]");
-                // $cleActivation  = $request->get("activation_user[cleActivation]");
+                $au = $request->get("activation_user");
+                extract($au);
 
                 // ON PASSE PAR $form
-                $email = $form->get("email")->getData();
-                $cleActivation = $form->get("cleActivation")->getData();
+                // $email = $form->get("email")->getData();
+                // $cleActivation = $form->get("cleActivation")->getData();
 
                 // REQUETE READ SUR ENTITE User
                 $userTrouve = $userRepository->findOneBy([ "email" => $email, "cleActivation" => $cleActivation]);
