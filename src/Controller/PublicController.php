@@ -7,6 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Form\UserType;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class PublicController extends AbstractController
@@ -17,9 +19,51 @@ class PublicController extends AbstractController
     public function index()
     {
         return $this->render('public/index.html.twig', [
-            'controller_name' => 'PublicController',
+            // CLES => VARIABLES TWIG
         ]);
     }
+
+    /**
+     * @Route("/inscription", name="inscription")
+     */
+    public function inscription(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        $message = "";
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // BRICOLAGE POUR RATTRAPER LE PROBLEME SUR roles
+            $user->setRoles(["ROLE_USER"]);
+
+            // HASHAGE DU MOT DE PASSE
+            $passwordNonHashe = $user->getPassword();
+            $passwordHashe    = password_hash($passwordNonHashe, PASSWORD_BCRYPT);
+            $user->setPassword($passwordHashe);
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // OK ON A CREE UN NOUVEL User
+            $message = "COOL BIENVENUE TON COMPTE EST CREE";
+
+            // IL FAUT ENVOYER UN EMAIL
+
+            // return $this->redirectToRoute('user_index');
+        }
+
+        // AFFICHAGE DE LA PAGE
+        return $this->render('public/inscription.html.twig', [
+            // CLES => VARIABLES TWIG
+            'message'           => $message,
+            'form'              => $form->createView(),
+        ]);
+    }
+
 
     /**
      * @Route("/test/{id}", name="testRoute", requirements={"id"="\d+"})

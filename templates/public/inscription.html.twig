@@ -11,7 +11,12 @@
 <div class="example-wrapper">
 
     <section>
-        <h3>ACCUEIL</h3>
+        <h3>FORMULAIRE D'INSCRIPTION (PAGE INSCRIPTION)</h3>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn">{{ button_label|default('Save') }}</button>
+            <p class="">{{ message }}</p>
+        {{ form_end(form) }}
     </section>
 
 
