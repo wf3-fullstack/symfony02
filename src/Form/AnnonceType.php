@@ -10,6 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 // ON VA GERER LA RELATION AVEC User
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+// POUR AVOIR UN INPUT type="file"
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class AnnonceType extends AbstractType
@@ -21,7 +23,8 @@ class AnnonceType extends AbstractType
             ->add('description')
             ->add('slug')
             ->add('prix')
-            ->add('photo')
+            // https://symfony.com/doc/current/reference/forms/types/file.html
+            ->add('photo', FileType::class)
             ->add('datePublication')
             ->add('categorie')
             ->add('user', EntityType::class, [

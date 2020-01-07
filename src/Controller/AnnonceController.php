@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Annonce;
 use App\Form\AnnonceType;
+use App\Repository\UserRepository;
 use App\Repository\AnnonceRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Repository\UserRepository;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 /**
@@ -31,13 +32,34 @@ class AnnonceController extends AbstractController
     /**
      * @Route("/new", name="annonce_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, KernelInterface $appKernel): Response
     {
         $annonce = new Annonce();
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // IL FAUT GERER LE FICHIER UPLOADE AVEC photo
+            // https://symfony.com/doc/current/controller/upload_file.html
+            $photo = $form['photo']->getData();
+            if ($photo)
+            {
+                // ON A UN FICHIER UPLOADE
+                // https://www.php.net/manual/fr/transliterator.transliterate.php
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                //$safeFilename = \Transliterator::transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $safeFilename =  $originalFilename;
+                $fileName = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+
+                // ON VA STOCKER CE NOM EN BASE DE DONNEES
+                $annonce->setPhoto($fileName);
+
+                // ON VA STOCKER LE FICHIER
+                $cheminDossier = $appKernel->getProjectDir() . "/public/assets/upload";
+                $photo->move($cheminDossier, $fileName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();
