@@ -455,5 +455,10 @@ class MonCode
     https://symfony.com/doc/current/controller/upload_file.html
 
 
+## CREATION DE FORMULAIRE DE CREATION De User
+
+    php bin/console make:registration-form
+
+    
 
 
