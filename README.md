@@ -173,10 +173,10 @@
 
 ## A VOIR AVEC SYMFONY
 
-    MAIL
+    OK =>    MAIL
     https://symfony.com/doc/current/mailer.html
 
-    FORMULAIRE ET VALIDATION        OK (CONTRAINTES)
+    OK =>   FORMULAIRE ET VALIDATION        (CONTRAINTES)
     https://symfony.com/doc/current/validation.html
 
     FORMULAIRE ET UPLOAD
@@ -185,7 +185,7 @@
     FORMULAIRE ET HTML ET CSS
     https://symfony.com/doc/current/forms.html
 
-    FORMULAIRE ET AJAX (ET JSON)
+    OK => FORMULAIRE ET AJAX (ET JSON)
     https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
 
     READ AVEC JOINTURE
@@ -196,6 +196,8 @@
     FORMULAIRE ET CREATE/UPDATE/DELETE AVEC JOINTURE
     https://symfony.com/doc/current/forms.html#rendering-forms
 
+
+    OK => INJECTION DEPENDANCES AVEC SYMFONY
 
     EXEMPLE PRATIQUE: 
     PANIER
@@ -388,9 +390,59 @@ https://symfony.com/doc/current/mailer.html
     php bin/console make:form
 
 
+## INJECTION DEPENDANCES
 
-    
-    
+
+```php
+
+class MonCode
+{
+    // METHODE SANS INJECTION DE DEPENDANCE
+    function ecrireMonCode ()
+    {
+        // DEPENDANCES ENTRE CLASSES
+        // ON A BESOIN DE PLEIN D'OBJETS AVANT DE POUVOIR CONSTRUIRE L'OBJET QUI NOUS INTERESSE
+        $objet1 = new MaClasse1;
+
+        $objet2 = new MaClasse2($objet1);
+
+        $objet3 = new MaClasse3($objet1, $objet2);
+
+        // ON VEUT JUSTE POUVOIR APPELER LA METHODE
+        // MAIS ON NE VEUT AVOIR A GERER LA CREATION (new)
+        $objet3->faireTravail();
+
+    }
+
+    // ON RECOIT L'OBJET EN PARAMETRE
+    // ON N'A PAS BESOIN DE FAIRE new
+    function ecrireMonCodeAvecInjection (MaClasse3 $objet3, MaClasse4 $objet4)
+    {
+        // ON VEUT JUSTE POUVOIR APPELER LA METHODE
+        // MAIS ON NE VEUT AVOIR A GERER LA CREATION (new)
+        $objet3->faireTravail();
+
+    }
+}
+
+```
+
+    INTROSPECTION OU REFLECTION
+
+    https://www.php.net/manual/fr/book.reflection.php
+
+    // PHP PERMET D'ANALYSER LE CODE PHP 
+    // ET D'EXTRAIRE LES INFORMATIONS SUR LES TYPES DES PARAMETRES DES METHODES
+
+    https://www.php.net/manual/fr/reflectionparameter.gettype.php
+
+
+## BEST PRACTICES: SYMFONY RECOMMANDE DE CENTRALISER LE CODE PHP POUR UN FORMULAIRE
+
+    https://symfony.com/doc/current/best_practices.html#use-a-single-action-to-render-and-process-the-form
+
+    PROBLEME: PAS A JOUR PAR RAPPORT AUX ARCHITECTURES LOGICIELLES ACTUELLES 
+    (AJAX, ANGULAR, REACT, VUEJS, etc...)
 
 
 

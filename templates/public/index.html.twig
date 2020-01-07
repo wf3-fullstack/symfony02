@@ -14,6 +14,70 @@
         <h3>ACCUEIL</h3>
     </section>
 
+    <section>
+        <h3>LISTE DES ANNONCES</h3>
+        <div class="listeAnnonce">
+        {% for annonce in annonces %}
+        <article>
+            <h3>{{ annonce.titre }}</h3>
+            <h4>{{ annonce.prix }}</h4>
+            <p>{{ annonce.description }}</p>
+        </article>
+        {% endfor %}
+        </div>
+    </section>
+
+
+    <section>
+        <h3>LISTE DES ANNONCES AVEC AJAX</h3>
+        <button class="chargerListe">CHARGER LA LISTE</button>
+        <div class="listeAnnonceAjax">
+        </div>
+    </section>
+    <script>
+    // ON VA ENVOYER UNE REQUETE AJAX
+    // POUR RECUPERER LA LISTE DES ANNONCES EN FORMAT JSON
+    var bouton = document.querySelector("button.chargerListe");
+    bouton.addEventListener("click", function(){
+        // debug
+        console.log("tu as cliqué");
+
+        var formData = new FormData();
+        // ON PEUT REMPLIR LE FORM DATA EN JS
+        formData.append("nomTable", "annonce");
+
+        // ON VA ENVOYER UNE REQUETE AJAX AVEC fetch
+        var urlAjax = "{{ path('balanceTonJson') }}"; // ???
+        fetch(urlAjax, {
+            method: 'POST',
+            body: formData
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function(objetResponse){
+            console.log(objetResponse);
+            if (objetResponse.annonces) {
+                var baliseListeAnnonce = document.querySelector(".listeAnnonceAjax");
+                // reset de la liste
+                baliseListeAnnonce.innerHTML = '';
+
+                for(annonce of objetResponse.annonces)
+                {
+                    console.log(annonce);
+                    var htmlArticle = `
+                        <article>
+                            <h3>` + annonce.titre + `</h3>
+                            <h4>` + annonce.prix + `</h4>
+                            <p>` + annonce.description + `</p>
+                        </article>
+                    `;
+                    baliseListeAnnonce.innerHTML += (htmlArticle);
+                }
+            }
+        });    
+    })
+    </script>
 
 </div>
 {% endblock %}

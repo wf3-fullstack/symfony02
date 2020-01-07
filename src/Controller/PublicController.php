@@ -17,17 +17,26 @@ use Symfony\Component\Mime\Email;
 // FORMULAIRE D'ACTIVATION
 use App\Form\ActivationUserType;
 
+use App\Repository\AnnonceRepository;
+
 
 class PublicController extends AbstractController
 {
     /**
      * @Route("/", name="public")
      */
-    public function index()
+    public function index(AnnonceRepository $annonceRepository)
     {
+        // READ SUR LES Annonce
+        // ET ENSUITE ON TRANSLET A TWIG POUR L'AFFICHAGE
+        $annonces = $annonceRepository->findBy([], [ "datePublication" => "DESC"]);
+        // DEBUG
+        dump($annonces);
+
         return $this->render('public/index.html.twig', [
             // CLES => VARIABLES TWIG
             "classBody" => "index",
+            "annonces"  => $annonces,
         ]);
     }
 
@@ -118,8 +127,13 @@ class PublicController extends AbstractController
                 // DEBUG
                 dump("FORMULAIRE VALIDE A TRAITER");
                 // RECUPERER LES INFOS DU FORMULAIRE
-                $au = $request->get("activation_user");
-                extract($au);
+                // $tabInfo = $request->get("activation_user);
+                // https://symfony.com/doc/current/form/without_class.html");
+                $tabInfo = $form->getData();
+                extract($tabInfo);
+                // extract va créer les variables
+                // $email
+                // $cleActivation
 
                 // ON PASSE PAR $form
                 // $email = $form->get("email")->getData();
