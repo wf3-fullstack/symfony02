@@ -8,7 +8,7 @@
     <h3>AVANT DESCRIPTION</h3>
     {{ form_label(form.description) }}
     {{ form_errors(form.description) }}
-    {{ form_widget(form.description, {'attr': {'cols': '80', 'class': 'maClasseAMoi'}}) }}
+    {{ form_widget(form.description, {'required' : false, 'attr': {'cols': '80', 'class': 'maClasseAMoi'}}) }}
     {{ form_help(form.description) }}
     <h3>APRES DESCRIPTION</h3>
 

@@ -475,84 +475,160 @@ https://symfony.com/doc/current/form/data_mappers.html
 
 ## SESSION
 
-EN PHP, DANS UNE METHODE CONTROLLER
-ON PEUT UTILISER LA METHPDE $this->getUser()
+    EN PHP, DANS UNE METHODE CONTROLLER
+    ON PEUT UTILISER LA METHPDE $this->getUser()
 
-DANS LES TEMPLATES TWIG
-ON A UNE VARIABLE GLOBALE app
-ET DANS app ON PEUT ACCEDER A app.user
-etc...
+    DANS LES TEMPLATES TWIG
+    ON A UNE VARIABLE GLOBALE app
+    ET DANS app ON PEUT ACCEDER A app.user
+    etc...
 
-https://symfony.com/doc/3.4/templating/app_variable.html
+    https://symfony.com/doc/3.4/templating/app_variable.html
 
 
-AVEC SYMFONY DANS UNE METHODE CONTROLLER
-ON PEUT PASSER PAR SessionInterface
-ET LES METHODES get ET set
+    AVEC SYMFONY DANS UNE METHODE CONTROLLER
+    ON PEUT PASSER PAR SessionInterface
+    ET LES METHODES get ET set
 
-https://symfony.com/doc/current/session.html
+    https://symfony.com/doc/current/session.html
 
-DANS TWIG, ON PEUT PASSER PAR app.session
+    DANS TWIG, ON PEUT PASSER PAR app.session
 
-ET PEUT ETRE REGARDER EN JS localStorage ET sessionStorage
+    ET PEUT ETRE REGARDER EN JS localStorage ET sessionStorage
 
 
 ## TWIG ET FORMULAIRES
 
-https://symfony.com/doc/current/form/form_customization.html
+    https://symfony.com/doc/current/form/form_customization.html
 
-{{ form(form) }}
-
-
-{{ form_start(form) }}
-    <h3>AVANT</h3>
-    {{ form_widget(form) }}
-    <h3>APRES</h3>
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    {{ form(form) }}
 
 
-POUR CONTROLER UN CHAMP DE FORMULAIRE, ON PEUT ALLER DANS LE NIVEAU DE DETAIL AVEC form_row
-
-    {{ form_row(form.titre) }}
-
-
-
-{{ form_start(form) }}
-
-    <h3>AVANT</h3>
-    {{ form_row(form.titre) }}
-    <h3>APRES</h3>
-
-    {# SYMFONY COMPLETE LES CHAMPS MANQUANTS A LA FIN DU FORMULAIRE #}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    {{ form_start(form) }}
+        <h3>AVANT</h3>
+        {{ form_widget(form) }}
+        <h3>APRES</h3>
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
 
 
-SI ON A BESOIN D'ALLER ENCORE PLUS DANS LE DETAIL
+    POUR CONTROLER UN CHAMP DE FORMULAIRE, ON PEUT ALLER DANS LE NIVEAU DE DETAIL AVEC form_row
 
-form_label
-form_widget
-form_errors
-form_help
-
-SI ON A BESOIN DE CONTROLER LE CODE HTML AU NIVEAU DES ATTRIBUTS,
-ON PEUT AJOUTER DES PARAMETRES SUPPLEMENTAIRES AVEC LA FONCTION form_widget
-
-{{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
+        {{ form_row(form.titre) }}
 
 
 
-EN PHP, ON PEUT AUSSI AJOUTER DES PARAMETRES POUR CONTROLLER LE HTML GENERE
+    {{ form_start(form) }}
 
-https://symfony.com/doc/current/reference/forms/types/entity.html#attr
+        <h3>AVANT</h3>
+        {{ form_row(form.titre) }}
+        <h3>APRES</h3>
+
+        {# SYMFONY COMPLETE LES CHAMPS MANQUANTS A LA FIN DU FORMULAIRE #}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
 
 
-CONSEIL: 
-PREFERER TWIG POUR PERSONNALISER LES FORMULAIRES
-ET SI ON A BESOIN DE PARAMETRES AVEC DES INFOS DE PHP ALORS AJOUTER LE CODE NECESSAIRE
-DANS LES CLASSES FormType...
+    SI ON A BESOIN D'ALLER ENCORE PLUS DANS LE DETAIL
+
+    form_label
+    form_widget
+    form_errors
+    form_help
+
+    SI ON A BESOIN DE CONTROLER LE CODE HTML AU NIVEAU DES ATTRIBUTS,
+    ON PEUT AJOUTER DES PARAMETRES SUPPLEMENTAIRES AVEC LA FONCTION form_widget
+
+    {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
 
 
+    ATTENTION: required EST GERE A PART...
+
+    {{ form_widget(form.description, {'required' : false, 'attr': {'cols': '80', 'class': 'maClasseAMoi'}}) }}
+
+
+    EN PHP, ON PEUT AUSSI AJOUTER DES PARAMETRES POUR CONTROLLER LE HTML GENERE
+
+    https://symfony.com/doc/current/reference/forms/types/entity.html#attr
+
+
+    CONSEIL: 
+    PREFERER TWIG POUR PERSONNALISER LES FORMULAIRES
+    ET SI ON A BESOIN DE PARAMETRES AVEC DES INFOS DE PHP ALORS AJOUTER LE CODE NECESSAIRE
+    DANS LES CLASSES FormType...
+
+
+## PROTECTION FORMULAIRE UPLOAD
+
+
+    NE PAS OUBLIER DE RAJOUTER DES CONTRAINTES POUR SECURISER LES FORMULAIRES
+
+
+
+    // POUR PROTEGER LES FICHIERS QU'ON PEUT UPLOADER
+    use Symfony\Component\Validator\Constraints\File;
+
+    // ...
+
+            // https://symfony.com/doc/current/reference/forms/types/file.html
+            ->add('photo', FileType::class, [
+                                'constraints' => [
+                                        new File([
+                                            'maxSize' => '1024k',
+                                            // https://symfony.com/doc/current/reference/constraints/File.html#mimetypes
+                                            'mimeTypes' => [
+                                                'image/*',
+                                            ],
+                                            'mimeTypesMessage' => "Merci d'envoyer une image valide",
+                                        ]),
+                                    ],
+            ])
+
+
+### BUNDLES SYMFONY
+
+    https://symfony.com/doc/current/bundles.html
+
+
+    EASY ADMIN BUNDLE POUR AJOUTER UN BACK OFFICE
+
+    https://symfony.com/doc/master/bundles/EasyAdminBundle/index.html
+
+
+    composer require admin
+
+    ET PERSONNALISER LES FICHIER DE CONFIGURATION...
+
+
+    API PLATFORM
+
+
+    https://api-platform.com/docs/core/getting-started/
+
+
+    composer require api
+
+    ENSUITE IL FAUT AJOUTER DES ANNOTATIONS DANS CHAQUE ENTITE 
+    QU'ON VEUT EXPOSER AVEC API PLATFORM
+
+    // ...
+    use ApiPlatform\Core\Annotation\ApiResource;
+
+    /**
+    * @ApiResource
+    * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+    * @UniqueEntity(
+    *      fields="username", 
+    *      message="bad username"
+    * )
+    * @UniqueEntity(
+    *      fields="email", 
+    *      message="DESOLE CHANGE D'EMAIL STP..."
+    * )
+    */
+    class User implements UserInterface
+    {
+        // ...
+    }
 

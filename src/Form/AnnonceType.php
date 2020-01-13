@@ -14,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+// POUR PROTEGER LES FICHIERS QU'ON PEUT UPLOADER
+use Symfony\Component\Validator\Constraints\File;
+
 
 class AnnonceType extends AbstractType
 {
@@ -27,7 +30,18 @@ class AnnonceType extends AbstractType
             ])
             ->add('prix')
             // https://symfony.com/doc/current/reference/forms/types/file.html
-            ->add('photo', FileType::class)
+            ->add('photo', FileType::class, [
+                                'constraints' => [
+                                        new File([
+                                            'maxSize' => '1024k',
+                                            // https://symfony.com/doc/current/reference/constraints/File.html#mimetypes
+                                            'mimeTypes' => [
+                                                'image/*',
+                                            ],
+                                            'mimeTypesMessage' => "Merci d'envoyer une image valide",
+                                        ]),
+                                    ],
+            ])
             ->add('datePublication')
             ->add('categorie')
             ->add('user', EntityType::class, [

@@ -14,7 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 // DON'T forget the following use statement!!!
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+
 /**
+ * @ApiResource
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
  *      fields="username", 
