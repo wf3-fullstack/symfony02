@@ -1,4 +1,17 @@
+
 {{ form_start(form) }}
+
+    <h3>AVANT</h3>
+    {{ form_row(form.titre) }}
+    <h3>APRES</h3>
+
+    <h3>AVANT DESCRIPTION</h3>
+    {{ form_label(form.description) }}
+    {{ form_errors(form.description) }}
+    {{ form_widget(form.description, {'attr': {'cols': '80', 'class': 'maClasseAMoi'}}) }}
+    {{ form_help(form.description) }}
+    <h3>APRES DESCRIPTION</h3>
+
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

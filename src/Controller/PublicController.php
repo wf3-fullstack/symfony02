@@ -265,4 +265,12 @@ class PublicController extends AbstractController
     }
 
 
+    /**
+     * @Route("/bootstrap", name="boostrap")
+     */
+    public function boostrap()
+    {
+        return $this->render('public/bootstrap.html.twig', [
+        ]);        
+    }
 }

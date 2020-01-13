@@ -2,16 +2,17 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Entity\Annonce;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 // ON VA GERER LA RELATION AVEC User
-use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 // POUR AVOIR UN INPUT type="file"
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 class AnnonceType extends AbstractType
@@ -21,7 +22,9 @@ class AnnonceType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
-            ->add('slug')
+            ->add('slug', TextType::class, [
+                            'attr' => ['class' => 'maClasseAvecPhp'],
+            ])
             ->add('prix')
             // https://symfony.com/doc/current/reference/forms/types/file.html
             ->add('photo', FileType::class)
@@ -30,7 +33,12 @@ class AnnonceType extends AbstractType
             ->add('user', EntityType::class, [
                             'class' => User::class, // ON VA FAIRE UNE RELATION AVEC User
                             'choice_label' => 'username',   // QUELLE PROPRIETE SERA AFFICHEE DANS LE FORMULAIRE
+                            // 'expanded' => true,     // CREE DES BOUTONS RADIOS ET PAS UNE BALISE select
+                            //'multiple' => true,  // => VA CREER DES CHECKBOX
+
         ])
+        // ON NE RAJOUTE PAS DE BOUTON
+        // CE SERA DANS TWIG QUE LE CODE HTML DU BOUTON SERA RAJOUTE
         ;
     }
 

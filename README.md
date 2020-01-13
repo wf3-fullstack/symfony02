@@ -459,6 +459,100 @@ class MonCode
 
     php bin/console make:registration-form
 
-    
+
+## DATA MAPPERS
+
+POUR ALLER PLUS LOIN DANS LE TRAITEMENT DES FORMULAIRES...
+
+Data Transformer
+
+https://symfony.com/doc/current/form/data_transformers.html
+
+Data Mappers
+
+https://symfony.com/doc/current/form/data_mappers.html
+
+
+## SESSION
+
+EN PHP, DANS UNE METHODE CONTROLLER
+ON PEUT UTILISER LA METHPDE $this->getUser()
+
+DANS LES TEMPLATES TWIG
+ON A UNE VARIABLE GLOBALE app
+ET DANS app ON PEUT ACCEDER A app.user
+etc...
+
+https://symfony.com/doc/3.4/templating/app_variable.html
+
+
+AVEC SYMFONY DANS UNE METHODE CONTROLLER
+ON PEUT PASSER PAR SessionInterface
+ET LES METHODES get ET set
+
+https://symfony.com/doc/current/session.html
+
+DANS TWIG, ON PEUT PASSER PAR app.session
+
+ET PEUT ETRE REGARDER EN JS localStorage ET sessionStorage
+
+
+## TWIG ET FORMULAIRES
+
+https://symfony.com/doc/current/form/form_customization.html
+
+{{ form(form) }}
+
+
+{{ form_start(form) }}
+    <h3>AVANT</h3>
+    {{ form_widget(form) }}
+    <h3>APRES</h3>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+
+POUR CONTROLER UN CHAMP DE FORMULAIRE, ON PEUT ALLER DANS LE NIVEAU DE DETAIL AVEC form_row
+
+    {{ form_row(form.titre) }}
+
+
+
+{{ form_start(form) }}
+
+    <h3>AVANT</h3>
+    {{ form_row(form.titre) }}
+    <h3>APRES</h3>
+
+    {# SYMFONY COMPLETE LES CHAMPS MANQUANTS A LA FIN DU FORMULAIRE #}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+
+SI ON A BESOIN D'ALLER ENCORE PLUS DANS LE DETAIL
+
+form_label
+form_widget
+form_errors
+form_help
+
+SI ON A BESOIN DE CONTROLER LE CODE HTML AU NIVEAU DES ATTRIBUTS,
+ON PEUT AJOUTER DES PARAMETRES SUPPLEMENTAIRES AVEC LA FONCTION form_widget
+
+{{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
+
+
+
+EN PHP, ON PEUT AUSSI AJOUTER DES PARAMETRES POUR CONTROLLER LE HTML GENERE
+
+https://symfony.com/doc/current/reference/forms/types/entity.html#attr
+
+
+CONSEIL: 
+PREFERER TWIG POUR PERSONNALISER LES FORMULAIRES
+ET SI ON A BESOIN DE PARAMETRES AVEC DES INFOS DE PHP ALORS AJOUTER LE CODE NECESSAIRE
+DANS LES CLASSES FormType...
+
 
 
