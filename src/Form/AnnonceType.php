@@ -31,6 +31,7 @@ class AnnonceType extends AbstractType
             ->add('prix')
             // https://symfony.com/doc/current/reference/forms/types/file.html
             ->add('photo', FileType::class, [
+                                'data_class' => null,
                                 'constraints' => [
                                         new File([
                                             'maxSize' => '1024k',

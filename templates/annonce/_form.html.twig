@@ -12,6 +12,8 @@
     {{ form_help(form.description) }}
     <h3>APRES DESCRIPTION</h3>
 
+    {{ form_row(form.photo) }}
+
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

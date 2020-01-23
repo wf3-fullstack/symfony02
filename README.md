@@ -634,14 +634,88 @@ https://symfony.com/doc/current/form/data_mappers.html
 
 ## UPLOAD DE FICHIERS AVEC UPDATE
 
-    ANCIENNE DOCUMENTATION
-
-    https://symfony.com/doc/2.6/cookbook/doctrine/file_uploads.html
-
     DOCUMENTATION ACTUELLE (SEULEMENT AVEC new)
 
     https://symfony.com/doc/master/controller/upload_file.html
 
+    POUR EVITER L'ERREUR POUR LE FORMULAIRE UPDATE (edit)
 
+
+```php
+// ...
+// src/FormType/AnnonceType.php
+// ...
+
+            // https://symfony.com/doc/current/reference/forms/types/file.html
+            ->add('photo', FileType::class, [
+                                // => DESACTIVE LE Data Mapper POUR NE PAS AVOIR L'ERREUR
+                                'data_class' => null,
+                                'constraints' => [
+                                        new File([
+                                            'maxSize' => '1024k',
+                                            // https://symfony.com/doc/current/reference/constraints/File.html#mimetypes
+                                            'mimeTypes' => [
+                                                'image/*',
+                                            ],
+                                            'mimeTypesMessage' => "Merci d'envoyer une image valide",
+                                        ]),
+                                    ],
+            ])
+```
+
+    ET IL FAUT AJOUTER LE CODE PHP DE TRAITEMENT
+    POUR DEPLACER LE FICHIER UPLOADE 
+    ET ENSUITE STOCKER LE BON CHEMIN DANS LA PROPRIETE
     ...
-    
+
+
+```php
+
+    public function edit(Request $request, Annonce $annonce): Response
+    {
+        $form = $this->createForm(AnnonceType::class, $annonce);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            // IL FAUT GERER LE FICHIER UPLOADE AVEC photo
+            // https://symfony.com/doc/current/controller/upload_file.html
+            $photo = $form['photo']->getData();
+            if ($photo) {
+                // ON A UN FICHIER UPLOADE
+                // https://www.php.net/manual/fr/transliterator.transliterate.php
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                //$safeFilename = \Transliterator::transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $safeFilename =  $originalFilename;
+                $fileName = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+
+                // ON VA STOCKER CE NOM EN BASE DE DONNEES
+                $annonce->setPhoto($fileName);
+
+                // ON VA STOCKER LE FICHIER
+                $projectDir = $this->getParameter("kernel.project_dir");
+                $cheminDossier = "$projectDir/public/assets/upload";
+                dump($projectDir);
+
+                $photo->move($cheminDossier, $fileName);
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($annonce);
+                $entityManager->flush();
+            }
+            dump($annonce);
+
+            //return $this->redirectToRoute('annonce_index');
+        }
+
+        return $this->render('annonce/edit.html.twig', [
+            'annonce' => $annonce,
+            'form' => $form->createView(),
+        ]);
+    }
+```
+    ANCIENNE DOCUMENTATION
+
+    https://symfony.com/doc/2.6/cookbook/doctrine/file_uploads.html
+

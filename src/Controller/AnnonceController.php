@@ -124,7 +124,34 @@ class AnnonceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('annonce_index');
+            // IL FAUT GERER LE FICHIER UPLOADE AVEC photo
+            // https://symfony.com/doc/current/controller/upload_file.html
+            $photo = $form['photo']->getData();
+            if ($photo) {
+                // ON A UN FICHIER UPLOADE
+                // https://www.php.net/manual/fr/transliterator.transliterate.php
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                //$safeFilename = \Transliterator::transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $safeFilename =  $originalFilename;
+                $fileName = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+
+                // ON VA STOCKER CE NOM EN BASE DE DONNEES
+                $annonce->setPhoto($fileName);
+
+                // ON VA STOCKER LE FICHIER
+                $projectDir = $this->getParameter("kernel.project_dir");
+                $cheminDossier = "$projectDir/public/assets/upload";
+                dump($projectDir);
+
+                $photo->move($cheminDossier, $fileName);
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($annonce);
+                $entityManager->flush();
+            }
+            dump($annonce);
+
+            //return $this->redirectToRoute('annonce_index');
         }
 
         return $this->render('annonce/edit.html.twig', [
