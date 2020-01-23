@@ -632,3 +632,16 @@ https://symfony.com/doc/current/form/data_mappers.html
         // ...
     }
 
+## UPLOAD DE FICHIERS AVEC UPDATE
+
+    ANCIENNE DOCUMENTATION
+
+    https://symfony.com/doc/2.6/cookbook/doctrine/file_uploads.html
+
+    DOCUMENTATION ACTUELLE (SEULEMENT AVEC new)
+
+    https://symfony.com/doc/master/controller/upload_file.html
+
+
+    ...
+    
