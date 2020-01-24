@@ -651,6 +651,7 @@ https://symfony.com/doc/current/form/data_mappers.html
                                 // => DESACTIVE LE Data Mapper POUR NE PAS AVOIR L'ERREUR
                                 'data_class' => null,
                                 'constraints' => [
+                                        'required'    => false,
                                         new File([
                                             'maxSize' => '1024k',
                                             // https://symfony.com/doc/current/reference/constraints/File.html#mimetypes
@@ -667,6 +668,9 @@ https://symfony.com/doc/current/form/data_mappers.html
     POUR DEPLACER LE FICHIER UPLOADE 
     ET ENSUITE STOCKER LE BON CHEMIN DANS LA PROPRIETE
     ...
+
+    PROBLEME: ON N'EST PAS OBLIGE DE CHANGER L'IMAGE
+    ET QUAND ON REND LE CHAMP OPTIONNEL, L'ANCIENNE VALEUR EST EFFACEE... :-/
 
 
 ```php
@@ -715,7 +719,9 @@ https://symfony.com/doc/current/form/data_mappers.html
         ]);
     }
 ```
-    ANCIENNE DOCUMENTATION
 
+
+    ANCIENNE DOCUMENTATION
+    => ON UTILISE UNE 2E PROPRIETE DANS L'ENTITE JUSTE POUR GERER LE FORMULAIRE
     https://symfony.com/doc/2.6/cookbook/doctrine/file_uploads.html
 

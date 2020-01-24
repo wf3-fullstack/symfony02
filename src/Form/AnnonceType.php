@@ -31,6 +31,7 @@ class AnnonceType extends AbstractType
             ->add('prix')
             // https://symfony.com/doc/current/reference/forms/types/file.html
             ->add('photo', FileType::class, [
+                                'required'    => false,
                                 // => DESACTIVE LE Data Mapper POUR NE PAS AVOIR L'ERREUR
                                 'data_class' => null,
                                 'constraints' => [

@@ -121,12 +121,13 @@ class AnnonceController extends AbstractController
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
+        dump($annonce);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
             // IL FAUT GERER LE FICHIER UPLOADE AVEC photo
             // https://symfony.com/doc/current/controller/upload_file.html
-            $photo = $form['photo']->getData();
+            $photo = $form['photo']->getData() ?? null;
+            dump($photo);
             if ($photo) {
                 // ON A UN FICHIER UPLOADE
                 // https://www.php.net/manual/fr/transliterator.transliterate.php
@@ -145,11 +146,11 @@ class AnnonceController extends AbstractController
 
                 $photo->move($cheminDossier, $fileName);
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($annonce);
-                $entityManager->flush();
             }
             dump($annonce);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($annonce);
+            $entityManager->flush();
 
             //return $this->redirectToRoute('annonce_index');
         }
